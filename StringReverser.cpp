@@ -12,3 +12,7 @@ string StringReverser::solve(string str) {
     }
     return reverse;
 }
+
+string StringReverser::getClassName() {
+    return "String Reverser";
+}
