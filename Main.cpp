@@ -14,7 +14,7 @@
 
 int boot::Main::main(int port) {
     server_side::Server *s = new MySerialServer;
-    CacheManager* cacheManager = new FileCacheManager(400);
+    CacheManager* cacheManager = new FileCacheManager(5);
     Solver<string, string> *solver = new StringReverser;
     ClientHandler* c = new MyTestClientHandler(cacheManager,solver);
     s->open(port, c);
