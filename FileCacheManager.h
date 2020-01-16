@@ -16,9 +16,9 @@ private:
 
 public:
     FileCacheManager(int cap);
-    bool isResolved(string problem);
-    string popSolution(string problem);
-    void saveSolution(string problem, string solution);
+    bool isResolved(string problem, string name);
+    string popSolution(string problem, string name);
+    void saveSolution(string problem, string solution, string name);
 };
 
 

@@ -10,11 +10,12 @@ void MyTestClientHandler::handleClient(int input) {
     string buff = buffer;
     string msg;
     while (buff != "end") {
-        if(this->cacheManager->isResolved(buff)){
-            msg = this->cacheManager->popSolution(buff);
+        if(this->cacheManager->isResolved(buff, solver->getClassName())){
+            msg = this->cacheManager->popSolution(buff, solver->getClassName());
         } else {
             msg = this->solver->solve(buff);
-            this->cacheManager->saveSolution(this->solver->solve(buff), msg);
+            this->cacheManager->saveSolution(this->solver->solve(buff), msg,
+                    solver->getClassName());
         }
         //writing back to client
         send(input , msg.c_str() , strlen(msg.c_str()) , 0 );
