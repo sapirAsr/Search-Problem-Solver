@@ -13,6 +13,7 @@ private:
     int size;
     list<string> keys;
     fstream in_file;
+    map<string, int> problems;
 
 public:
     FileCacheManager(int cap);
