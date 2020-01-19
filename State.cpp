@@ -20,6 +20,28 @@ void State<T>::setCost(double c) {
 }
 
 template <class T>
-void State<T>::setFather(State<T> f) {
+void State<T>::setFather(T f) {
     this->cameFrom = f;
 }
+
+template<class T>
+T State<T>::getState() {
+    return this->state;
+}
+
+template<class T>
+State<T> State<T>::getFather() {
+    return this->cameFrom;
+}
+
+template<class T>
+bool State<T>::getVisit() {
+    return this->visited;
+}
+
+template<class T>
+void State<T>::setVisit() {
+    this->visited = true;
+}
+
+

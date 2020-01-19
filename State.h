@@ -11,11 +11,16 @@ private:
     T state;
     double  cost;
     State<T> cameFrom;
+    bool visited = false;
 public:
     State(T s);
     bool Equals (T state);
     void setCost(double c);
-    void setFather(State<T> f);
+    void setFather(T f);
+    T getState();
+    void setVisit();
+    bool getVisit();
+    State<T> getFather();
 };
 
 

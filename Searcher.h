@@ -15,9 +15,10 @@ private:
     queue<State<T>> priorityQ;
     int evaluatedNodes = 0;
 public:
-    T search(Searchable<T> s) = 0;
-    int getNumberOfNodesEvaluated();
-    State<T> popPriorityQ();
+    virtual T search(Searchable<T> s) = 0;
+    virtual void addToOpenList(Searcher<T>) = 0;
+    virtual int getNumberOfNodesEvaluated();
+    virtual State<T> popPriorityQ();
 };
 
 

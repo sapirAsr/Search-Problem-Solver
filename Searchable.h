@@ -6,15 +6,23 @@
 #define MILESTONE2_SEARCHABLE_H
 
 #include "State.h"
-#include <list>
+#include <vector>
 using namespace std;
 
 template <class T> class Searchable {
+protected:
+    int size;
+    bool visited = false;
 public:
-    State<T> getInitialState() = 0;
-    bool isGoalState(State<T>) = 0;
-    list<T> getAllPossibleStates(State<T>) = 0;
+    virtual State<T> getInitialState() = 0;
+    virtual State<T> getGoalState() = 0;
+    virtual vector<State<T>> getAllPossibleStates(State<T> possibility) = 0;
+    virtual void setSize(int s) = 0;
+    virtual int getSize() = 0;
+    virtual void setVisit() = 0;
 };
+
+
 
 
 #endif //MILESTONE2_SEARCHABLE_H

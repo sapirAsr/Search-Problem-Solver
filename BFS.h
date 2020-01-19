@@ -6,9 +6,17 @@
 #define MILESTONE2_BFS_H
 
 #include "Searcher.h"
+#include <iterator>
+#include <list>
 
-class BFS : public Searcher{
-
+template <class T>
+class BFS: public Searcher<T> {
+private:
+    list<State<T>*> openList;
+    int evaluate = 0;
+    double cost;
+public:
+    vector<State<T>> search(Searchable<T>* s);
 };
 
 
