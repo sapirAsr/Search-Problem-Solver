@@ -5,7 +5,7 @@
 #include "BFS.h"
 
 template <class T>
-vector<State<T>> BFS<T>::search(Searchable<T>* s) {
+vector<State<T> *> BFS<T>::search(Searchable<T>* s) {
     openList.push_back(s->getInitialState());
     evaluate++;
     s->setVisit();

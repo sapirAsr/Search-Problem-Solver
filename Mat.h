@@ -8,18 +8,25 @@
 #include "Searchable.h"
 #include <vector>
 #include <string>
-class Mat : public Searchable<string> {
-private:
-    vector<vector<string>> matrix;
+#include "Position.h"
 
+class Mat : public Searchable<Position> {
+private:
+    vector<vector<State<Position>*>*> matrix;
+    int size;
+    //State<string>* currrr;
 public:
-    Mat(vector<vector<string>> mat);
-    State<string> getInitialState();
-    State<string> getGoalState();
-    vector<State<string>> getAllPossibleStates(State<string> possibility);
+    Mat(vector<vector<State<Position>*>*> mat);
+    State<Position>* getInitialState();
+    State<Position>* getGoalState();
+    vector<State<Position>*> getAllPossibleStates(State<Position>* possibility);
     void setSize(int s);
     int getSize();
     void setVisit();
+    void setCurr(State<Position> *curr);
+    State<Position>* getCurr();
+    double calcHValue(State<Position>* cur);
+    bool equals(Position* s);
 
 };
 

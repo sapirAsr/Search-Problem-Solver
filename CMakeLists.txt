@@ -3,4 +3,4 @@ project(milestone2)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -pthread)
-add_executable(milestone2 Server.cpp Server.h MySerialServer.cpp MySerialServer.h ClientHandler.cpp ClientHandler.h MyTestClientHandler.cpp MyTestClientHandler.h Solver.cpp Solver.h CacheManager.cpp CacheManager.h FileCacheManager.cpp FileCacheManager.h StringReverser.cpp StringReverser.h Main.h Main.cpp main.cpp Graph.cpp Graph.h Searcher.cpp Searcher.h Searchable.cpp Searchable.h State.cpp State.h BFS.cpp BFS.h Mat.cpp Mat.h BestFirstSearch.cpp BestFirstSearch.h)
+add_executable(milestone2 Server.cpp Server.h MySerialServer.cpp MySerialServer.h ClientHandler.cpp ClientHandler.h MyTestClientHandler.cpp MyTestClientHandler.h Solver.cpp Solver.h CacheManager.cpp CacheManager.h FileCacheManager.cpp FileCacheManager.h StringReverser.cpp StringReverser.h Main.h Main.cpp main.cpp Graph.cpp Graph.h Searcher.cpp Searcher.h Searchable.cpp Searchable.h State.cpp State.h BFS.cpp BFS.h Mat.cpp Mat.h BestFirstSearch.cpp BestFirstSearch.h DFS.cpp DFS.h Comper.cpp Comper.h AStar.cpp AStar.h Position.cpp Position.h)

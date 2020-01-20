@@ -3,26 +3,39 @@
 //
 
 #include "Mat.h"
-Mat::Mat(vector<vector<string>> mat) {
+Mat::Mat(vector<vector<State<Position>*>*> mat) {
     this->matrix = mat;
 }
 
-State<string> Mat::getInitialState() {
+State<Position>* Mat::getInitialState() {
+    auto* s = (string *) "0,0";
+    this->currrr->setState(s);
+    double cost = stoi(this->matrix.at(0).at(0));
+    currrr->setCost(cost);
+    currrr->setDistance(cost);
+    currrr->setFather(nullptr);
+    return currrr;
+    /**
     State<string> state = State<string>("0,0");
-    state.setCost(stoi(this->matrix.at(0).at(0)));
+    double cost = stoi(this->matrix.at(0).at(0));
+    state.setCost(cost);
+    state.setDistance(cost);
     state.setFather(nullptr);
     return state;
+    */
 }
 
-State<string> Mat::getGoalState() {
-    long size = matrix.size() - 1;
+State<Position>* Mat::getGoalState() {
+    long sizee = matrix.size() - 1;
     long sizeRow = matrix.at(0).size() - 1;
-    return this->matrix.at(size).at(sizeRow);
+    string state = this->matrix.at(sizee).at(sizeRow);
+    State<string>* s = new State<string>(state);
+    return s;
 }
 
-vector<State<string>> Mat::getAllPossibleStates(State<string> possibility) {
+vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility) {
     vector<State<string>> neighbours;
-    string state = possibility.getState();
+    string* state = possibility->getState();
     int len = state.length();
     string row;
     string col;
@@ -68,7 +81,7 @@ vector<State<string>> Mat::getAllPossibleStates(State<string> possibility) {
     return neighbours;
 }
 
-void Mat::setSize(int s) {
+void Mat::setSize() {
     this->size = this->matrix.size() * this->matrix.at(0).size();
 }
 
@@ -77,5 +90,38 @@ int Mat::getSize() {
 }
 
 void Mat::setVisit() {
-    this->visited = true;
+    this->currrr->setVisit();
+}
+
+void Mat::setCurr(State<string> *c) {
+    this->currrr = c;
+}
+
+State<string>* Mat::getCurr() {
+    return this->currrr;
+}
+
+double Mat::calcHValue(State<string> *cur) {
+    /**
+    int xCur = cur->getState()->getX();
+    int yCur = cur->getState()->getY();
+    int xGoal = this->getGoalState()->getState()->getX();
+    int yGoal = this->getGoalState()->getState()->getY();
+    double disMan = abs (xCur - xGoal) +
+                    abs (yCur - yGoal);
+    double total = disMan + cur->getCost() + cur->getParent()->getDistance();
+    //cur->setHeur(total);
+
+    h = abs (cur->getState() – th.x) +
+            abs (current_cell.y – goal.y)
+    return total;
+     */
+    return 0;
+}
+void Mat::setSize(int s){
+    this->size = 0;
+}
+
+bool Mat::equals(string *s) {
+    return this->curr->getState() == s;
 }

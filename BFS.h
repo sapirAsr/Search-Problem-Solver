@@ -16,7 +16,7 @@ private:
     int evaluate = 0;
     double cost;
 public:
-    vector<State<T>> search(Searchable<T>* s);
+    vector<State<T>*> search(Searchable<T>* s);
 };
 
 

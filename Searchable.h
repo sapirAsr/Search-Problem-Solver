@@ -11,18 +11,19 @@ using namespace std;
 
 template <class T> class Searchable {
 protected:
-    int size;
-    bool visited = false;
+    int size = 0;
+    State<T>* curr;
 public:
-    virtual State<T> getInitialState() = 0;
-    virtual State<T> getGoalState() = 0;
-    virtual vector<State<T>> getAllPossibleStates(State<T> possibility) = 0;
+    virtual State<T>* getInitialState() = 0;
+    virtual State<T>* getGoalState() = 0;
+    virtual vector<State<T>*> getAllPossibleStates(State<T>* possibility) = 0;
     virtual void setSize(int s) = 0;
     virtual int getSize() = 0;
     virtual void setVisit() = 0;
+    virtual void setCurr(State<T>* state) = 0;
+    virtual State<T>* getCurr() = 0;
+    virtual double calcHValue(State<T>* cur) = 0;
 };
-
-
 
 
 #endif //MILESTONE2_SEARCHABLE_H

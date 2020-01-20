@@ -9,10 +9,10 @@ int Searcher<T>::getNumberOfNodesEvaluated() {
     return evaluatedNodes;
 }
 
-template<class T>
-State<T> Searcher<T>::popPriorityQ() {
+//template<class T>
+/**State<T> Searcher<T>::popPriorityQ() {
     evaluatedNodes++;
     State<T> top = this->priorityQ.top();
     this->priorityQ.pop();
     return top;
-}
+}**/
