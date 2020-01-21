@@ -7,17 +7,20 @@
 
 #include <iostream>
 #include <queue>
+#include <unordered_set>
+#include <list>
+#include "Comper.h"
 #include "State.h"
 #include "Searchable.h"
 
-template <class T> class Searcher {
+template <class T, class S> class Searcher {
 private:
-    queue<State<T>> priorityQ;
     int evaluatedNodes = 0;
 public:
-    T search(Searchable<T> s) = 0;
-    int getNumberOfNodesEvaluated();
-    State<T> popPriorityQ();
+    virtual S search(Searchable<T>* s) = 0;
+    //virtual void addToOpenList(Searcher<T>) = 0;
+    virtual int getNumberOfNodesEvaluated() = 0;
+    //virtual State<T> popPriorityQ();
 };
 
 
