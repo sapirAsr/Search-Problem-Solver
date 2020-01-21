@@ -16,7 +16,8 @@ public:
     void setCol(int c);
     int getRow();
     int getCol();
-};
+    bool equals(Position s);
+    };
 
 
 #endif //MILESTONE2_POSITION_H

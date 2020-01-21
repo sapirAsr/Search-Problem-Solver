@@ -1,7 +1,7 @@
 //
 // Created by michal on 19/01/2020.
 //
-
+/**
 #include "BestFirstSearch.h"
 template<class T>
 vector<State<T>*> BestFirstSearch<T>::search(Searchable<T> s) {
@@ -76,3 +76,4 @@ BestFirstSearch<T>::updateQueue(priority_queue<State<T> *, vector<State<T> *>, C
     return temp;
 }
 
+*/

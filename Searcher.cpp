@@ -3,11 +3,11 @@
 //
 
 #include "Searcher.h"
-
+/**
 template<class T>
 int Searcher<T>::getNumberOfNodesEvaluated() {
     return evaluatedNodes;
-}
+}*/
 
 //template<class T>
 /**State<T> Searcher<T>::popPriorityQ() {

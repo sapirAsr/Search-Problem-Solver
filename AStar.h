@@ -8,7 +8,7 @@
 
 #include "Searcher.h"
 template <class T>
-class AStar : public Searcher<T>{
+class AStar : public Searcher<T,vector<State<T>*>>{
 private:
     priority_queue<State<T>*,vector<State<T>*>,Comper<T>> open;
     unordered_set<State<T>*> closed;

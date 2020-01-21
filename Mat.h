@@ -6,27 +6,24 @@
 #define MILESTONE2_MAT_H
 
 #include "Searchable.h"
-#include <vector>
-#include <string>
 #include "Position.h"
+
 
 class Mat : public Searchable<Position> {
 private:
-    vector<vector<State<Position>*>*> matrix;
-    int size;
-    //State<string>* currrr;
+    vector<vector<double>> matrix;
+    int row;
+    int col;
 public:
-    Mat(vector<vector<State<Position>*>*> mat);
+    Mat(vector<vector<double >> mat, State<Position>* init, State<Position>* goal, int r,int c);
     State<Position>* getInitialState();
     State<Position>* getGoalState();
     vector<State<Position>*> getAllPossibleStates(State<Position>* possibility);
-    void setSize(int s);
     int getSize();
     void setVisit();
     void setCurr(State<Position> *curr);
     State<Position>* getCurr();
-    double calcHValue(State<Position>* cur);
-    bool equals(Position* s);
+    //double calcHValue(State<Position>* cur);
 
 };
 

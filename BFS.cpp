@@ -1,11 +1,11 @@
 //
 // Created by michal on 19/01/2020.
 //
-
+/**
 #include "BFS.h"
 
-template <class T>
-vector<State<T> *> BFS<T>::search(Searchable<T>* s) {
+template < class T>
+vector<State<T>*> BFS<T>::search(Searchable<T>* s) {
     openList.push_back(s->getInitialState());
     evaluate++;
     s->setVisit();
@@ -41,3 +41,9 @@ vector<State<T> *> BFS<T>::search(Searchable<T>* s) {
         }
     }
 }
+
+template<class T>
+int BFS<T>::getNumberOfNodesEvaluated() {
+    return this->evaluate;
+}
+*/

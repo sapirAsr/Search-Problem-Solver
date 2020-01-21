@@ -24,3 +24,8 @@ int Position::getRow() {
 int Position::getCol() {
     return this->col;
 }
+
+bool Position::equals(Position s) {
+    return (this->row == s.getRow() && this->col == s.getCol());
+}
+

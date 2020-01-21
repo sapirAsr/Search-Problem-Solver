@@ -1,7 +1,7 @@
 //
 // Created by michal on 20/01/2020.
 //
-
+/**
 #include "DFS.h"
 
 template <class T>
@@ -45,3 +45,4 @@ int DFS<T>::helpSearch(Searchable<T>* s, State<T>* curr, vector<State<T>*> &trac
     }
     return trace;
 }
+ */

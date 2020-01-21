@@ -1,16 +1,17 @@
 //
 // Created by michal on 19/01/2020.
 //
-
+/**
 #include "State.h"
 
-template <class T>
-State<T>::State(T* s, double c) {
+template<typename T>
+/**
+State<T>::State(T s): state(s) {
     this->state = s;
-    this->cost = c;
 }
 
-template <class T>
+
+//template <typename T>
 bool State<T>::equals (T* s) {
     return s->equals(this->state);
 }
@@ -21,12 +22,12 @@ void State<T>::setCost(double c) {
 }
 
 template <class T>
-void State<T>::setFather(T* f) {
+void State<T>::setFather(T f) {
     this->cameFrom = f;
 }
 
 template<class T>
-T* State<T>::getState() {
+T State<T>::getState() {
     return this->state;
 }
 
@@ -63,7 +64,6 @@ double State<T>::getDistance() {
 template<class T>
 void State<T>::setH(double he) {
     this->h = he;
-
 }
 
 template<class T>
@@ -72,14 +72,10 @@ double State<T>::getH() {
 }
 
 template<class T>
-State<T> & State<T>::operator=(State<T> *s) {
-    this = s;
-    return *this;
-}
-
-template<class T>
-void State<T>::setState(T* s) {
-    this = s;
+bool &State<T>::operator==(State<T> *s) {
+    return this->state == s;
 }
 
 
+
+*/

@@ -13,14 +13,13 @@
 #include "State.h"
 #include "Searchable.h"
 
-template <class T> class Searcher {
+template <class T, class S> class Searcher {
 private:
-    queue<State<T>*> priorityQ;
     int evaluatedNodes = 0;
 public:
-    virtual vector<State<T>*> search(Searchable<T>* s) = 0;
+    virtual S search(Searchable<T>* s) = 0;
     //virtual void addToOpenList(Searcher<T>) = 0;
-    virtual int getNumberOfNodesEvaluated();
+    virtual int getNumberOfNodesEvaluated() = 0;
     //virtual State<T> popPriorityQ();
 };
 
