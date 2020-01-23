@@ -18,14 +18,13 @@ private:
 public:
     vector<State<T>*> search(Searchable<T>* s) {
         openList.push_back(s->getInitialState());
-        evaluate++;
         s->setVisit();
         vector<State<T> *> path;
         while (openList.size() > 0) {
             State<T>* n = openList.front();
             openList.pop_front();
+            evaluate++;
             if (n->equals(s->getGoalState())) {
-                evaluate++;
                 while (n->getFather() != nullptr) {
                     path.push_back(n);
                     cost += n->getCost();
@@ -46,7 +45,6 @@ public:
                     state->setVisit();
                     state->setFather(n);
                     openList.push_back(state);
-                    evaluate++;
                     s->setCurr(state);
                 }
             }

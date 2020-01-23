@@ -21,6 +21,16 @@ State<Position>* Mat::getGoalState() {
     return this->goal;
 }
 
+State<Position> *Mat::getVisitedNode(int row1, int col1) {
+    for (State<Position>* state : visitedNodes) {
+        Position p = state->getState();
+        if ((p.getRow() == row1) && (p.getCol() == col1)) {
+            return state;
+        }
+    }
+    return nullptr;
+}
+
 vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility) {
     vector<State<Position>*> neighbours;
     int stateRow = possibility->getState().getRow();
@@ -30,29 +40,46 @@ vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility)
     int col1 = stateCol - 1;
     int col2 = stateCol + 1;
     State<Position>* newState;
+    Position p = possibility->getState();
+    if (getVisitedNode(p.getRow(), p.getCol()) == nullptr) {
+        this->visitedNodes.push_back(possibility);
+    }
     if (row1 != -1) {
-        newState = new State<Position>(Position(row1, stateCol));
-        newState->setFather(possibility);
-        newState->setCost(this->matrix.at(row1).at(stateCol));
-        neighbours.push_back(newState);
+        if (getVisitedNode(row1, stateCol) == nullptr) {
+            newState = new State<Position>(Position(row1, stateCol));
+            newState->setFather(possibility);
+            newState->setCost(this->matrix.at(row1).at(stateCol));
+            neighbours.push_back(newState);
+        } else {
+            neighbours.push_back(getVisitedNode(row1, stateCol));
+        }
     } if (row2 != this->matrix.size()) {
-        Position p = Position(row2, stateCol);
-        newState = new State<Position>(p);
-        newState->setFather(possibility);
-        newState->setCost(this->matrix.at(row2).at(stateCol));
-        neighbours.push_back(newState);
+        if (getVisitedNode(row2, stateCol) == nullptr) {
+            newState = new State<Position>(Position(row2, stateCol));
+            newState->setFather(possibility);
+            newState->setCost(this->matrix.at(row2).at(stateCol));
+            neighbours.push_back(newState);
+        } else {
+            neighbours.push_back(getVisitedNode(row2, stateCol));
+        }
     } if (col1 != -1) {
-        Position p = Position(stateRow, col1);
-        newState = new State<Position>(p);
-        newState->setFather(possibility);
-        newState->setCost(this->matrix.at(stateRow).at(col1));
-        neighbours.push_back(newState);
+        if (getVisitedNode(stateRow, col1) == nullptr) {
+            newState = new State<Position>(Position(stateRow, col1));
+            newState->setFather(possibility);
+            newState->setCost(this->matrix.at(stateRow).at(col1));
+            neighbours.push_back(newState);
+        } else {
+            neighbours.push_back(getVisitedNode(stateRow, col1));
+        }
     } if (col2 != this->matrix.at(0).size()) {
-        Position p = Position(stateRow,col2);
-        newState = new State<Position>(p);
-        newState->setFather(possibility);
-        newState->setCost(this->matrix.at(stateRow).at(col2));
-        neighbours.push_back(newState);
+        if (getVisitedNode(stateRow, col2) == nullptr) {
+            newState = new State<Position>(Position(stateRow, col2));
+            newState->setFather(possibility);
+            newState->setCost(this->matrix.at(stateRow).at(col2));
+            neighbours.push_back(newState);
+        } else {
+            neighbours.push_back(getVisitedNode(stateRow, col2));
+        }
     }
     return neighbours;
 }
@@ -73,24 +100,13 @@ State<Position>* Mat::getCurr() {
     return this->curr;
 }
 
-/**bool Mat::isGoalState(State<Position> *s) {
-    return this->goal->operator==(s);
-}**/
-
-/**double Mat::calcHValue(State<string> *cur) {
-
-    int xCur = cur->getState()->getX();
-    int yCur = cur->getState()->getY();
-    int xGoal = this->getGoalState()->getState()->getX();
-    int yGoal = this->getGoalState()->getState()->getY();
+double Mat::calcHValue(State<Position> *cur) {
+    int xCur = cur->getState().getRow();
+    int yCur = cur->getState().getCol();
+    int xGoal = this->getGoalState()->getState().getRow();
+    int yGoal = this->getGoalState()->getState().getCol();
     double disMan = abs (xCur - xGoal) +
                     abs (yCur - yGoal);
-    double total = disMan + cur->getCost() + cur->getParent()->getDistance();
-    //cur->setHeur(total);
-
-    h = abs (cur->getState() – th.x) +
-            abs (current_cell.y – goal.y)
+    double total = disMan + cur->getCost() + cur->getFather()->getDistance();
     return total;
-
-    return 0;
-}*/
+}

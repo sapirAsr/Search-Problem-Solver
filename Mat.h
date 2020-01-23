@@ -14,6 +14,7 @@ private:
     vector<vector<double>> matrix;
     int row;
     int col;
+    vector<State<Position>*> visitedNodes;
 public:
     Mat(vector<vector<double >> mat, State<Position>* init, State<Position>* goal, int r,int c);
     State<Position>* getInitialState();
@@ -23,8 +24,8 @@ public:
     void setVisit();
     void setCurr(State<Position> *curr);
     State<Position>* getCurr();
-    //double calcHValue(State<Position>* cur);
-
+    State<Position>* getVisitedNode(int row1, int col1);
+    double calcHValue(State<Position>* cur);
 };
 
 

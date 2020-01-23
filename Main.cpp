@@ -16,7 +16,7 @@ int boot::Main::main(int port) {
     State<Position>* init = new State<Position>(d);
     State<Position>* goal = new State<Position>(Position(2,2));
     Searchable<Position> *m = new Mat(ss,init,goal,3,3);
-    Searcher<Position, vector<State<Position>*>> *n = new DFS<Position>;
+    Searcher<Position, vector<State<Position>*>> *n = new BFS<Position>;
     vector<State<Position>*> v = n->search(m);
     cout<<n->getNumberOfNodesEvaluated()<<endl;
     //server_side::Server *s = new MySerialServer;

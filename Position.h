@@ -5,6 +5,8 @@
 #ifndef MILESTONE2_POSITION_H
 #define MILESTONE2_POSITION_H
 
+#include "string"
+using namespace std;
 
 class Position {
 private:

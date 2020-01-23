@@ -26,7 +26,7 @@ public:
     virtual void setVisit() = 0;
     virtual void setCurr(State<T>* state) = 0;
     virtual State<T>* getCurr() = 0;
-    //virtual double calcHValue(State<T>* cur) = 0;
+    virtual double calcHValue(State<T>* cur) = 0;
 };
 
 
