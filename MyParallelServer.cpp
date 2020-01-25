@@ -1,11 +1,10 @@
 //
-// Created by michal on 14/01/2020.
+// Created by michal on 24/01/2020.
 //
 
-#include <cstring>
-#include "MySerialServer.h"
+#include "MyParallelServer.h"
 
-void MySerialServer::open(int port, ClientHandler *c) {
+void MyParallelServer::open(int port, ClientHandler *c) {
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
@@ -13,7 +12,6 @@ void MySerialServer::open(int port, ClientHandler *c) {
         std::cerr << "Could not create a socket" << std::endl;
         exit(1);
     }
-
     //bind socket to IP address
     // we first need to create the sockaddr obj.
     sockaddr_in address; //in means IP4
@@ -30,38 +28,43 @@ void MySerialServer::open(int port, ClientHandler *c) {
     }
 
     //making socket listen to the port
-    if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
+    if (listen(socketfd, 10) == -1) { //can also set to SOMAXCON (max connections)
         std::cerr << "Error during listening command" << std::endl;
         exit(1);
     } else {
-        std::cout << "Server is now listening ..." << std::endl;
+        std::cout << "Parallel Server is now listening ..." << std::endl;
     }
-//timeout waiting for client
-    // accepting a client
-
-   // close(socketfd); //closing the listening socket
-
-    //reading from client
     thread serverThread([=]{loop(socketfd, address, c);});
     serverThread.join();
-    stop(socketfd);
-
 }
 
-void MySerialServer::loop(int socketfd,sockaddr_in address, ClientHandler* c) {
+void MyParallelServer::stop(int socketfd) {
+    this->stopLoop = true;
+}
+
+void MyParallelServer::loop(int socketfd, sockaddr_in address, ClientHandler *c) {
     struct timeval tv{};
     tv.tv_sec = 120;
     setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
-    int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
-    while (client_socket != -1) {
-        c->handleClient(client_socket);
-        client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
-        if (errno == EWOULDBLOCK) {
-            cout << "timeout" << endl;
+    while(!stopLoop) {
+        int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
+        if (client_socket == -1) {
+            if (errno == EWOULDBLOCK) {
+                cout << "timeout" << endl;
+                this->stop(socketfd);
+                break;
+            } else {
+                cout<<"error"<<endl;
+                exit(1);
+            }
         }
+        ClientHandler* newC = c->clone();
+        thread cThread([=]{clientTheard(client_socket,newC);});
+        this_thread::sleep_for(500ms);
+        cThread.detach();
     }
 }
 
-void MySerialServer::stop(int socketfd) {
-    close(socketfd);
+void MyParallelServer::clientTheard(int client_socket, ClientHandler *c) {
+    c->handleClient(client_socket);
 }

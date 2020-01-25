@@ -10,23 +10,50 @@
 template <class T>
 class BestFirstSearch: public Searcher<T,vector<State<T>*>>{
 private:
-    priority_queue<State<T>*,vector<State<T>*>,Comper<T>> open;
+    class Cmp {
+    public:
+        bool operator()(State<T>* left, State<T>* right) {
+            return (left->getDistance()) > (right->getDistance());
+        }
+    };
+    priority_queue<State<T>*, vector<State<T>*>, Cmp> open;
     unordered_set<State<T>*> closed;
     int evaluate = 0;
     double cost = 0;
 
+
+
 public:
-    vector<State<T>*> search(Searchable<T> s) {
-        open.push(s.getInitialState());
+    bool isExist( priority_queue<State<T> *, vector<State<T> *>, Cmp> open, State<T> *state) {
+        while (!open.empty()) {
+            if (state->equals(open.top())) {
+                return true;
+            }
+            open.pop();
+        }
+        return false;
+    }
+    priority_queue<State<T>*,vector<State<T>*>,Cmp> updateQueue(priority_queue<State<T>*, vector<State<T>*>, Cmp> &queueOpen) {
+        priority_queue<State<T>*,vector<State<T>*>,Cmp> temp;
+        while (!queueOpen.empty()) {
+            State<T>* node = queueOpen.top();
+            temp.push(node);
+            queueOpen.pop();
+        }
+        return temp;
+    }
+
+    vector<State<T>*> search(Searchable<T>* searchable) override {
+        open.push(searchable->getInitialState());
         vector<State<T>*> path;
         while (!open.empty()) {
             evaluate++;
             State<T>* n = open.top();
             open.pop();
             closed.insert(n);
-            if (n->equals(s.getGoalState())) {
+            if (n->equals(searchable->getGoalState())) {
                 path.push_back(n);
-                while (!n->equals(s.getInitialState())) {
+                while (!n->equals(searchable->getInitialState())) {
                     path.push_back(n->getFather());
                     cost += n->getCost();
                     n = n->getFather();
@@ -38,51 +65,30 @@ public:
                 }
                 return back;
             }
-            list<State<T> *> neighbors;
-            try {
-                neighbors = s.getAllPossibleStates(n);
-            } catch (exception &e) {
-                cout << "exception";
-            }
-            for (State<T>* adj : neighbors) { ;
+            vector<State<T> *> adjacent;
+            adjacent = searchable->getAllPossibleStates(n);
+
+            for (State<T>* adj : adjacent) { ;
                 bool exist = isExist(open, adj);
                 if (!exist && closed.count(adj) != 1) {
                     adj->setFather(n);
-                    ///todo
                     adj->setDistance(n->getDistance() +adj->getCost()) ;
                     open.push(adj);
                 } else if (adj->getDistance() > n->getDistance() + adj->getCost()) {
+                    bool inOpen = isExist(open, adj);
                     adj->setDistance(n->getDistance() + adj->getCost());
-                    adj->setParent(n);
+                    adj->setFather(n);
                     open = updateQueue(open);
                 }
             }
         }
         return path;
     }
-
-    int getNumberOfNodesEvaluated() {
-        return this->evaluate;
+    int getNumberOfNodesEvaluated(){
+        return evaluate;
     }
-
-    bool isExist(priority_queue<State<T> *, vector<State<T> *>, Comper<T>> open, State<T> *state) {
-        while (!open.empty()) {
-            if (state->equals(open.top())) {
-                return true;
-            }
-            open.pop();
-        }
-        return false;}
-
-    priority_queue<State<T> *, vector<State<T> *>,Comper<T>> updateQueue(priority_queue<State<T> *,
-            vector<State<T> *>, Comper<T>> &queueOpen) {
-        priority_queue<State<T>*,vector<State<T>*>> temp;
-        while (!queueOpen.empty()) {
-            State<T>* node = queueOpen.top();
-            temp.push(node);
-            queueOpen.pop();
-        }
-        return temp;
+    string getClassName(){
+        return "BestFirstSearch";
     }
 };
 

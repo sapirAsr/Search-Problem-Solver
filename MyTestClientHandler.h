@@ -5,9 +5,7 @@
 #ifndef EX4_1_MYTESTCLIENTHANDLER_H
 #define EX4_1_MYTESTCLIENTHANDLER_H
 #include "ClientHandler.h"
-#include "Solver.h"
-#include "CacheManager.h"
-#include <vector>
+
 
 class MyTestClientHandler : public ClientHandler {
 private:
@@ -16,6 +14,8 @@ Solver<string, string>* solver;
 public:
     MyTestClientHandler(CacheManager* cache, Solver<string, string>* solver);
     void handleClient(int input);
+    bool Find(string str);
+    ClientHandler *clone();
 
 };
 

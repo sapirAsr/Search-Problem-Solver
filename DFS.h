@@ -10,9 +10,8 @@
 #include <list>
 
 template <class T>
-class DFS: public Searcher<T,vector<State<T>*>>{
+class DFS: public Searcher<T, vector<State<T>*>>{
 private:
-    list<State<T>*> openList;
     int evaluate = 0;
     double cost;
 public:
@@ -57,6 +56,9 @@ public:
 
     int getNumberOfNodesEvaluated(){
         return evaluate;
+    }
+    string getClassName(){
+        return "DFS";
     }
 
 };

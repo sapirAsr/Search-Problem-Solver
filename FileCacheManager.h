@@ -9,17 +9,17 @@
 
 class FileCacheManager : public CacheManager {
 private:
-    unordered_map<string, pair<string, list<string>::iterator>> myCache;
-    int size;
-    list<string> keys;
-    fstream in_file;
-    map<string, int> problems;
+    fstream file;
+    unordered_map<string, int> strings;
+    hash<string> hasher;
 
 public:
-    FileCacheManager(int cap);
-    bool isResolved(string problem, string name);
+    bool isResolved(string problem);
     string popSolution(string problem, string name);
     void saveSolution(string problem, string solution, string name);
+    int problemKeyString(string mat) {
+        return 0;
+    }
 };
 
 

@@ -18,9 +18,9 @@ private:
     int evaluatedNodes = 0;
 public:
     virtual S search(Searchable<T>* s) = 0;
-    //virtual void addToOpenList(Searcher<T>) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
-    //virtual State<T> popPriorityQ();
+    virtual string getClassName() = 0;
+    virtual Searcher<T,S>* clone() = 0;
 };
 
 

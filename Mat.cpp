@@ -11,6 +11,9 @@ Mat::Mat(vector<vector<double >> mat, State<Position> *init, State<Position> *go
     this->matrix = mat;
     this->initial = init;
     this->goal = goal;
+    this->curr->setCost(this->matrix.at(init->getState().getRow()).at(init->getState().getCol()));
+    this->goal->setCost(this->matrix.at(goal->getState().getRow()).at(goal->getState().getCol()));
+
 }
 
 State<Position>* Mat::getInitialState() {
@@ -49,36 +52,52 @@ vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility)
             newState = new State<Position>(Position(row1, stateCol));
             newState->setFather(possibility);
             newState->setCost(this->matrix.at(row1).at(stateCol));
-            neighbours.push_back(newState);
+            if(newState->getCost() != -1) {
+                neighbours.push_back(newState);
+            }
         } else {
-            neighbours.push_back(getVisitedNode(row1, stateCol));
+            if((getVisitedNode(row1, stateCol))->getCost() != -1) {
+                neighbours.push_back(getVisitedNode(row1, stateCol));
+            }
         }
     } if (row2 != this->matrix.size()) {
         if (getVisitedNode(row2, stateCol) == nullptr) {
             newState = new State<Position>(Position(row2, stateCol));
             newState->setFather(possibility);
             newState->setCost(this->matrix.at(row2).at(stateCol));
-            neighbours.push_back(newState);
+            if(newState->getCost() != -1) {
+                neighbours.push_back(newState);
+            }
         } else {
-            neighbours.push_back(getVisitedNode(row2, stateCol));
+            if((getVisitedNode(row2, stateCol))->getCost() != -1) {
+                neighbours.push_back(getVisitedNode(row2, stateCol));
+            }
         }
     } if (col1 != -1) {
         if (getVisitedNode(stateRow, col1) == nullptr) {
             newState = new State<Position>(Position(stateRow, col1));
             newState->setFather(possibility);
             newState->setCost(this->matrix.at(stateRow).at(col1));
-            neighbours.push_back(newState);
+            if(newState->getCost() != -1) {
+                neighbours.push_back(newState);
+            }
         } else {
-            neighbours.push_back(getVisitedNode(stateRow, col1));
+            if(getVisitedNode(stateRow, col1)->getCost() != -1) {
+                neighbours.push_back(getVisitedNode(stateRow, col1));
+            }
         }
     } if (col2 != this->matrix.at(0).size()) {
         if (getVisitedNode(stateRow, col2) == nullptr) {
             newState = new State<Position>(Position(stateRow, col2));
             newState->setFather(possibility);
             newState->setCost(this->matrix.at(stateRow).at(col2));
-            neighbours.push_back(newState);
+            if(newState->getCost() != -1) {
+                neighbours.push_back(newState);
+            }
         } else {
-            neighbours.push_back(getVisitedNode(stateRow, col2));
+            if (getVisitedNode(stateRow, col2)->getCost() != -1) {
+                neighbours.push_back(getVisitedNode(stateRow, col2));
+            }
         }
     }
     return neighbours;

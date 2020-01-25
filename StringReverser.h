@@ -13,6 +13,7 @@ class StringReverser : public Solver <string, string> {
 public:
     string solve(string str);
     string getClassName();
+    Solver<string, string>* clone();
 };
 
 

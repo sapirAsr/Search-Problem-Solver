@@ -6,12 +6,15 @@
 #define EX4_1_SOLVER_H
 
 #include <iostream>
+#include "Searcher.h"
+
 using namespace std;
 
 template <class Problem, class Solution>class Solver {
 public:
     Solution virtual solve(Problem problem) = 0;
     virtual string getClassName() = 0;
+    virtual Solver* clone() = 0;
 };
 
 

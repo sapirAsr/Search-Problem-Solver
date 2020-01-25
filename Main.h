@@ -18,6 +18,8 @@
 #include "FileCacheManager.h"
 #include "ClientHandler.h"
 #include "MyTestClientHandler.h"
+#include "OA.h"
+#include "MyParallelServer.h"
 
 
 namespace boot{

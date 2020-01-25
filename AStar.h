@@ -19,6 +19,7 @@ private:
     unordered_set<State<T>*> closed;
     int evaluate = 0;
     double cost = 0;
+
 public:
     priority_queue<State<T>*,vector<State<T>*>,Cmp> updateQueue(priority_queue<State<T>*, vector<State<T>*>, Cmp> &queueOpen) {
         priority_queue<State<T>*,vector<State<T>*>,Cmp> temp;
@@ -29,6 +30,7 @@ public:
         }
         return temp;
     }
+
     vector<State<T>*> search(Searchable<T> *s) {
         open.push(s->getInitialState());
         vector<State<T> *> path;
@@ -59,19 +61,20 @@ public:
                 bool exist = isExist(open, adj);
                 if (!exist && closed.count(adj) != 1) {
                     adj->setVisit();
-                    adj->setFather(n);
+                    //adj->setFather(n);
                     adj->setH(s->calcHValue(adj));
                     open.push(adj);
                     adj->setDistance(n->getDistance() + adj->getCost());
                 } else if (adj->getDistance() > n->getDistance() + adj->getCost()) {
                     adj->setDistance(n->getDistance() + adj->getCost());
-                    adj->setFather(n);
+                    //adj->setFather(n);
                     adj->setH(s->calcHValue(adj));
                     open = updateQueue(open);
                 }
             }
         }
     }
+
     bool isExist( priority_queue<State<T> *, vector<State<T> *>, Cmp> o, State<T> *state) {
         while (!o.empty()) {
             if (state->equals(o.top())) {
@@ -83,6 +86,13 @@ public:
     }
     int getNumberOfNodesEvaluated(){
         return evaluate;
+    }
+
+    string getClassName(){
+        return "AStar";
+    }
+    Searcher<T, vector<State<T>*>>* clone() {
+        return new AStar<T>();
     }
 };
 

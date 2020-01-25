@@ -53,6 +53,9 @@ public:
     int getNumberOfNodesEvaluated(){
         return this->evaluate;
     }
+    string getClassName(){
+        return "BFS";
+    }
 };
 
 
