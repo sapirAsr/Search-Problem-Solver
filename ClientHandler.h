@@ -12,11 +12,19 @@
 #include "fstream"
 #include "iostream"
 #include "ostream"
+#include "Solver.h"
+#include "CacheManager.h"
+#include <vector>
+#include "Position.h"
+#include "Searchable.h"
+#include "Searcher.h"
+#include "Mat.h"
 using namespace std;
 
 class ClientHandler {
 public:
     virtual void handleClient(int input) = 0;
+    virtual ClientHandler *clone() = 0;
 };
 
 

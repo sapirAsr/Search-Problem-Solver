@@ -19,7 +19,8 @@ public:
     virtual bool isResolved(string problem, string name) = 0;
     string virtual popSolution(string problem, string name) = 0;
     void virtual saveSolution(string problem, string solution, string name) = 0;
-};
+    virtual int problemKeyString(string mat) = 0;
+    };
 
 
 #endif //EX4_1_CACHEMANAGER_H
