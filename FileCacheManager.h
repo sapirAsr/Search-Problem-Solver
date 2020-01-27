@@ -9,12 +9,13 @@
 
 class FileCacheManager : public CacheManager {
 private:
-    fstream file;
+    ofstream toFile;
+    ifstream fromFile;
     unordered_map<string, int> strings;
     hash<string> hasher;
 
 public:
-    bool isResolved(string problem);
+    bool isResolved(string problem, string name);
     string popSolution(string problem, string name);
     void saveSolution(string problem, string solution, string name);
     int problemKeyString(string mat) {

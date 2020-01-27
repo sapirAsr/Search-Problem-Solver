@@ -4,34 +4,50 @@
 
 #include "MatCacheManager.h"
 
-bool MatCacheManager::isResolved(string problem) {
-    return this->matrices.find(problem) == this->matrices.end() ? false : true;
+bool MatCacheManager::isResolved(string problem, string name) {
+    int val = hasher(problem);
+    string fileName = name + to_string(val) + ".txt";
+    fromFile.open(fileName, ios::in);
+    if (fromFile) {
+        fromFile.close();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 string MatCacheManager::popSolution(string problem, string name) {
     string solution;
-    int key = this->matrices[problem];
-    file.open(name + to_string(key), ios::in | ios::binary);
-    if (!file) {
+    string temp;
+    int key = hasher(problem);
+    string fileName = name + to_string(key) + ".txt";
+    fromFile.open(fileName);
+    if (!fromFile.is_open()) {
         throw "file doesn't exist";
     } else {
-        file.read((char *) &solution, solution.size());
-        file.close();
+        while (!fromFile.eof()) {
+            fromFile >> temp;
+            solution += temp;
+            temp = "";
+        }
     }
+    fromFile.close();
+    //solution += "\r\n";
     return solution;
 }
 
 void MatCacheManager::saveSolution(string problem, string solution, string name) {
     int val = hasher(problem);
-    this->matrices.insert({problem, val});
     // writing to file
-    //example of a file name : AStar 4
-    file.open(name + to_string(val), ios::out | ios::binary);
-    if (!file) {
-        throw "File open Error";
+    //example of a file name : Astar 4
+    string fileName = name + to_string(val) + ".txt";
+    toFile.open(fileName);
+    if (!toFile) {
+        cout<<"failed to open file"<<endl;
+        return;
     }
-    file.write((char*)&solution, sizeof(solution));
-    file.close();
+    toFile<<solution;
+    toFile.close();
 }
 
 int MatCacheManager::problemKeyString(string mat) {

@@ -16,7 +16,7 @@ using namespace std;
 
 class CacheManager {
 public:
-    virtual bool isResolved(string problem) = 0;
+    virtual bool isResolved(string problem, string name) = 0;
     string virtual popSolution(string problem, string name) = 0;
     void virtual saveSolution(string problem, string solution, string name) = 0;
     virtual int problemKeyString(string mat) = 0;

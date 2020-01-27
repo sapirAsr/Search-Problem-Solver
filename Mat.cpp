@@ -13,7 +13,6 @@ Mat::Mat(vector<vector<double >> mat, State<Position> *init, State<Position> *go
     this->goal = goal;
     this->curr->setCost(this->matrix.at(init->getState().getRow()).at(init->getState().getCol()));
     this->goal->setCost(this->matrix.at(goal->getState().getRow()).at(goal->getState().getCol()));
-
 }
 
 State<Position>* Mat::getInitialState() {
@@ -33,6 +32,8 @@ State<Position> *Mat::getVisitedNode(int row1, int col1) {
     }
     return nullptr;
 }
+
+
 
 vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility) {
     vector<State<Position>*> neighbours;

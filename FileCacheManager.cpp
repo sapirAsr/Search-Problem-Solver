@@ -4,32 +4,47 @@
 
 #include "FileCacheManager.h"
 
-bool FileCacheManager::isResolved(string problem) {
-    return this->strings.find(problem) == this->strings.end() ? false : true;
+bool FileCacheManager::isResolved(string problem, string name) {
+    int val = hasher(problem);
+    fromFile.open(name + to_string(val) + ".txt", ios::in);
+    if(fromFile){
+        fromFile.close();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 string FileCacheManager::popSolution(string problem, string name) {
     string solution;
-    int key = this->strings[problem];
-    file.open(name + to_string(key), ios::in | ios::binary);
-    if (!file) {
+    string temp;
+    int key = hasher(problem);
+    string fileName = name + to_string(key) + ".txt";
+    fromFile.open(fileName);
+    if (!fromFile.is_open()) {
         throw "file doesn't exist";
     } else {
-        file.read((char *) &solution, solution.size());
-        file.close();
+        while(!fromFile.eof()) {
+            fromFile >> temp;
+            solution += temp;
+            temp = "";
+        }
     }
+    fromFile.close();
+    solution += "\r\n";
     return solution;
 }
 
 void FileCacheManager::saveSolution(string problem, string solution, string name) {
     int val = hasher(problem);
-    this->strings.insert({problem, val});
     // writing to file
     //example of a file name : StringReverser 4
-    file.open(name + to_string(val), ios::out | ios::binary);
-    if (!file) {
-        throw "File open Error";
+    string fileName = name + to_string(val) + ".txt";
+    toFile.open(fileName);
+    if (!toFile) {
+        cout<<"failed to open file"<<endl;
+        return;
     }
-    file.write((char*)&solution, sizeof(solution));
-    file.close();
+    toFile<<solution;
+    toFile.close();
 }

@@ -11,7 +11,7 @@ string StringReverser::solve(string str) {
     for (int i = len - 1; i >= 0 ; --i) {
         reverse += str[i];
     }
-    reverse += '\n';
+    reverse += "\r\n";
     return reverse;
 }
 
@@ -21,4 +21,7 @@ string StringReverser::getClassName() {
 
 Solver<string, string> *StringReverser::clone() {
     return new StringReverser;
+}
+int StringReverser::getSearcherNodes(){
+    return 0;
 }

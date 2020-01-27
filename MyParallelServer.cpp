@@ -60,7 +60,6 @@ void MyParallelServer::loop(int socketfd, sockaddr_in address, ClientHandler *c)
         }
         ClientHandler* newC = c->clone();
         thread cThread([=]{clientTheard(client_socket,newC);});
-        this_thread::sleep_for(500ms);
         cThread.detach();
     }
 }

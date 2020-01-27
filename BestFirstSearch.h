@@ -90,6 +90,9 @@ public:
     string getClassName(){
         return "BestFirstSearch";
     }
+    Searcher<T, vector<State<T>*>>* clone() {
+        return new BestFirstSearch<T>();
+    }
 };
 
 

@@ -8,6 +8,7 @@
 #include "Searcher.h"
 #include <iterator>
 #include <list>
+#include <stack>
 
 template <class T>
 class DFS: public Searcher<T, vector<State<T>*>>{
@@ -15,9 +16,47 @@ private:
     int evaluate = 0;
     double cost;
 public:
+
     vector<State<T>*> search(Searchable<T>* s) {
         s->getCurr()->setVisit();
-        vector<State<T> *> trace;
+        stack<State<T>*> path;
+        State<T>* cur;
+        path.push(s->getInitialState());
+        while (!path.empty()) {
+            cur = path.top();
+            path.pop();
+            evaluate++;
+            vector<State<T>*> neighbours = s->getAllPossibleStates(cur);
+            for (State<T>* state : neighbours) {
+                bool visited = state->getVisit();
+                if (!visited) {
+                    state->setVisit();
+                    state->setFather(cur);
+                    path.push(state);
+                }
+            }
+            if (cur->equals(s->getGoalState())) {
+                while (cur->getFather() != nullptr) {
+                    path.push(cur);
+                    cost += cur->getCost();
+                    cur = cur->getFather();
+                }
+                cost += cur->getCost();
+                path.push(cur);
+                vector<State<T>*> back;
+                for (int i = path.size() - 1; i >= 0 ; i--) {
+                    back.push_back(path.top());
+                    path.pop();
+                }
+                return back;
+            }
+        }
+    }
+
+/**
+    vector<State<T>*> search(Searchable<T>* s) {
+        s->getCurr()->setVisit();
+        vector<State<T>*> trace;
         this->helpSearch(s, s->getInitialState(), trace);
         return trace;
     }
@@ -53,12 +92,17 @@ public:
             }
         }
     }
+    */
+
 
     int getNumberOfNodesEvaluated(){
         return evaluate;
     }
     string getClassName(){
         return "DFS";
+    }
+    Searcher<T, vector<State<T>*>>* clone() {
+        return new DFS<T>();
     }
 
 };

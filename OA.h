@@ -26,6 +26,10 @@ public:
         return this->searcher->getClassName();
     }
 
+    int getSearcherNodes() {
+        return this->searcher->getNumberOfNodesEvaluated();
+    }
+
     Solver<Searchable<T>*, vector<State<T>*>>* clone() {
         Searcher<T, S>* searcherClone = this->searcher->clone();
         return new OA(searcherClone);

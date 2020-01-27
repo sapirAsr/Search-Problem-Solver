@@ -37,20 +37,17 @@ void MyClientHandler::handleClient(int input) {
     newMat = this->createMatrix(messages);
     Searchable<Position>* matrixSearch = new Mat(newMat, i, g, newMat.size(),
                                                  newMat.at(0).size());
-    //vector<State<Position>*> res = solver->solve(matrixSearch);
-
     string stringMat = this->stringMatrix(messages);
-    //int key = this->cacheManager->problemKeyString(stringMat);
-
-    if (this->cacheManager->isResolved(stringMat)) {
+    if (this->cacheManager->isResolved(stringMat, solver->getClassName())) {
         msg = this->cacheManager->popSolution(stringMat, solver->getClassName());
     } else {
         vector<State<Position>*> res = this->solver->solve(matrixSearch);
-        //todo
         msg = this->toStringSolution(res);
         this->cacheManager->saveSolution(stringMat, msg, solver->getClassName());
     }
-    //writing back to client
+    string x = to_string(solver->getSearcherNodes());
+    msg = msg + "\r\nNumber of nodes: " + x + "\r\n";//writing back to client
+    cout<<msg<<endl;
     send(input, msg.c_str(), strlen(msg.c_str()), 0);
 }
 
@@ -147,6 +144,7 @@ string MyClientHandler::toStringSolution( vector<State<Position>*> path) {
         }
         cost += (int)(vertex->getCost());
     }
+    pathPlusCost = pathPlusCost.erase(pathPlusCost.length() - 2, 1);
     return pathPlusCost;
 }
 

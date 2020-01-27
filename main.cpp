@@ -10,6 +10,10 @@
 using namespace std ;
 
 int main(int argc, char *argv[]) {
-    boot::Main().main(stoi(argv[1])) ;
+    if (argc < 2) {
+        boot::Main().main(5600) ;
+    } else {
+        boot::Main().main(stoi(argv[1]));
+    }
     return 0;
 }

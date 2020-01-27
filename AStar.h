@@ -33,7 +33,7 @@ public:
 
     vector<State<T>*> search(Searchable<T> *s) {
         open.push(s->getInitialState());
-        vector<State<T> *> path;
+        vector<State<T>*> path;
         while (!open.empty()) {
             State<T> *n = open.top();
             // Remove this vertex from the open list

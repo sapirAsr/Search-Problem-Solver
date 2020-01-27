@@ -45,7 +45,6 @@ void MySerialServer::open(int port, ClientHandler *c) {
     thread serverThread([=]{loop(socketfd, address, c);});
     serverThread.join();
     stop(socketfd);
-
 }
 
 void MySerialServer::loop(int socketfd,sockaddr_in address, ClientHandler* c) {
