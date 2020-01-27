@@ -4,6 +4,12 @@
 
 #include "FileCacheManager.h"
 
+/**
+ * This func check if we already have a solution to a prblem we solved before.
+ * @param problem
+ * @param name the name of the class.
+ * @return true/ false.
+ */
 bool FileCacheManager::isResolved(string problem, string name) {
     int val = hasher(problem);
     fromFile.open(name + to_string(val) + ".txt", ios::in);
@@ -15,6 +21,12 @@ bool FileCacheManager::isResolved(string problem, string name) {
     }
 }
 
+/**
+ * this func returns the solution of the problem we already solved.
+ * @param problem
+ * @param name the name of the class.
+ * @return string of the solution.
+ */
 string FileCacheManager::popSolution(string problem, string name) {
     string solution;
     string temp;
@@ -35,6 +47,12 @@ string FileCacheManager::popSolution(string problem, string name) {
     return solution;
 }
 
+/**
+ * this func writes to files the solution to the problems we solved.
+ * @param problem
+ * @param solution
+ * @param name of class.
+ */
 void FileCacheManager::saveSolution(string problem, string solution, string name) {
     int val = hasher(problem);
     // writing to file

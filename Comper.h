@@ -7,7 +7,13 @@
 
 #include "State.h"
 template <class T>
+/**
+ * This class uses to compare between two objects.
+ * @tparam T generic type.
+ */
+
 class Comper {
+
 public:
     bool operator()(State<T>* left, State<T>* right) {
         return (left->getDistance()) > (right->getDistance());

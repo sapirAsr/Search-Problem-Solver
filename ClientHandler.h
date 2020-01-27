@@ -21,7 +21,11 @@
 #include "Mat.h"
 using namespace std;
 
+/**
+ * This is the client Handler interface.
+ */
 class ClientHandler {
+
 public:
     virtual void handleClient(int input) = 0;
     virtual ClientHandler *clone() = 0;

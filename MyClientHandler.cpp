@@ -45,9 +45,6 @@ void MyClientHandler::handleClient(int input) {
         msg = this->toStringSolution(res);
         this->cacheManager->saveSolution(stringMat, msg, solver->getClassName());
     }
-    string x = to_string(solver->getSearcherNodes());
-    msg = msg + "\r\nNumber of nodes: " + x + "\r\n";//writing back to client
-    cout<<msg<<endl;
     send(input, msg.c_str(), strlen(msg.c_str()), 0);
 }
 

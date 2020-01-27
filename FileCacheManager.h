@@ -7,6 +7,9 @@
 
 #include "CacheManager.h"
 
+/**
+ * this class manages the solutions to the problems we solved.
+ */
 class FileCacheManager : public CacheManager {
 private:
     ofstream toFile;
