@@ -11,12 +11,22 @@
 #include <stack>
 
 template <class T>
-class DFS: public Searcher<T, vector<State<T>*>>{
+/**
+ * this class is an algorithm to solve the problem of finding the cheapest path. This algorithm uses
+ * the searcher interface
+ * @tparam T a generic parameter.
+ */
+ class DFS: public Searcher<T, vector<State<T>*>>{
 private:
     int evaluate = 0;
     double cost;
 public:
 
+     /**
+      * This func finds the cheapest path from the initial state to the goal state.
+      * @param s a searchable to run over him the algorithm.
+      * @return the cheapest path.
+      */
     vector<State<T>*> search(Searchable<T>* s) {
         s->getCurr()->setVisit();
         stack<State<T>*> path;
@@ -53,54 +63,23 @@ public:
         }
     }
 
-/**
-    vector<State<T>*> search(Searchable<T>* s) {
-        s->getCurr()->setVisit();
-        vector<State<T>*> trace;
-        this->helpSearch(s, s->getInitialState(), trace);
-        return trace;
-    }
-
-    int helpSearch(Searchable<T>* s, State<T>* curr, vector<State<T>*> &trace) {
-        if (curr->equals(s->getGoalState())) {
-            this->evaluate++;
-            while (curr->getFather() != nullptr) {
-                trace.push_back(curr);
-                cost += curr->getCost();
-                curr = curr->getFather();
-            }
-            cost += curr->getCost();
-            trace.push_back(curr);
-            vector<State<T>*> back;
-            for (int i = trace.size() - 1; i >= 0 ; i--) {
-                back.push_back(trace.at(i));
-            }
-            trace = back;
-            return 1;
-        }
-        curr->setVisit();
-        this->evaluate++;
-        s->setCurr(curr);
-        vector<State<T>*> neighbours = s->getAllPossibleStates(curr);
-        for (State<T>* state : neighbours) {
-            bool visited = state->getVisit();
-            if (!visited) {
-                state->setFather(curr);
-                if (helpSearch(s, state, trace) == 1) {
-                    return 1;
-                }
-            }
-        }
-    }
-    */
-
-
+     /**
+      * @return the number of vertices.
+      */
     int getNumberOfNodesEvaluated(){
         return evaluate;
     }
+
+     /**
+      * @return the name of the class.
+      */
     string getClassName(){
         return "DFS";
     }
+
+     /**
+      * @return a clone of DFS.
+      */
     Searcher<T, vector<State<T>*>>* clone() {
         return new DFS<T>();
     }

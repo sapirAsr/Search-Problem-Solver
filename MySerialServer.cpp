@@ -5,6 +5,10 @@
 #include <cstring>
 #include "MySerialServer.h"
 
+/**
+ * @param port the port we want to connect.
+ * @param c client handler.
+ */
 void MySerialServer::open(int port, ClientHandler *c) {
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -47,6 +51,12 @@ void MySerialServer::open(int port, ClientHandler *c) {
     stop(socketfd);
 }
 
+/**
+ * this func will connect a client to socket.
+ * @param socketfd the socket we want all our clients to connect.
+ * @param address the addres we want to connect.
+ * @param c the client handler that we will use.
+ */
 void MySerialServer::loop(int socketfd,sockaddr_in address, ClientHandler* c) {
     struct timeval tv{};
     tv.tv_sec = 120;
@@ -61,6 +71,10 @@ void MySerialServer::loop(int socketfd,sockaddr_in address, ClientHandler* c) {
     }
 }
 
+/**
+ * this func stops the running.
+ * @param socketfd the number of the socket we want to connect
+ */
 void MySerialServer::stop(int socketfd) {
     close(socketfd);
 }

@@ -3,6 +3,15 @@
 //
 
 #include "Mat.h"
+
+/**
+ * constructor
+ * @param mat the costs of the edges
+ * @param init the init vertex
+ * @param goal the goal vertex
+ * @param r number of rows
+ * @param c number of columns
+ */
 Mat::Mat(vector<vector<double >> mat, State<Position> *init, State<Position> *goal, int r,
         int c) {
     this->curr = init;
@@ -15,14 +24,25 @@ Mat::Mat(vector<vector<double >> mat, State<Position> *init, State<Position> *go
     this->goal->setCost(this->matrix.at(goal->getState().getRow()).at(goal->getState().getCol()));
 }
 
+/**
+ * @return the initial vertex.
+ */
 State<Position>* Mat::getInitialState() {
     return this->initial;
 }
 
+/**
+ * @return the goal vertex.
+ */
 State<Position>* Mat::getGoalState() {
     return this->goal;
 }
 
+/**
+ * @param row1
+ * @param col1
+ * @return a state<position> of a vertex we already visited.
+ */
 State<Position> *Mat::getVisitedNode(int row1, int col1) {
     for (State<Position>* state : visitedNodes) {
         Position p = state->getState();
@@ -33,8 +53,10 @@ State<Position> *Mat::getVisitedNode(int row1, int col1) {
     return nullptr;
 }
 
-
-
+/**
+ * @param possibility a given vertex we want to find his neighbours.
+ * @return all the neighbours of a given vertex.
+ */
 vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility) {
     vector<State<Position>*> neighbours;
     int stateRow = possibility->getState().getRow();
@@ -104,22 +126,39 @@ vector<State<Position>*> Mat::getAllPossibleStates(State<Position>* possibility)
     return neighbours;
 }
 
+/**
+ * @return the size of the matrix.
+ */
 int Mat::getSize() {
     return this->size;
 }
 
+/**
+ * this func changes the visited flag to true.
+ */
 void Mat::setVisit() {
     this->curr->setVisit();
 }
 
+/**
+ * changes the current vertex of the matrix.
+ * @param c the state we want to make him the curr vertex.
+ */
 void Mat::setCurr(State<Position> *c) {
     this->curr = c;
 }
 
+/**
+ * @return the current vertex in the matrix.
+ */
 State<Position>* Mat::getCurr() {
     return this->curr;
 }
 
+/**
+ * @param cur the current vertex we want to calculate his h(x)
+ * @return a heuristic value of the distance between the current vertex and the goal vertex.
+ */
 double Mat::calcHValue(State<Position> *cur) {
     int xCur = cur->getState().getRow();
     int yCur = cur->getState().getCol();

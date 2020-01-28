@@ -8,6 +8,9 @@
 #include "string"
 using namespace std;
 
+/**
+ * this class holds the indeces of every vertex in the matrix.
+ */
 class Position {
 private:
     int row;

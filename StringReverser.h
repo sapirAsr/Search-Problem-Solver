@@ -9,6 +9,9 @@
 #include <string>
 using namespace std;
 
+/**
+ * this func solves the string reverser problem and implements the solver problem.
+ */
 class StringReverser : public Solver <string, string> {
 public:
     string solve(string str);

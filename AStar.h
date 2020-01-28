@@ -7,8 +7,14 @@
 
 #include "Searcher.h"
 template <class T>
+/**
+ * this class is an algorithm to solve the problem of finding the cheapest path. This algorithm uses
+ * the searcher interface
+ * @tparam T a generic parameter.
+ */
 class AStar : public Searcher<T,vector<State<T>*>>{
 private:
+    // comparator
     class Cmp {
     public:
         bool operator()(State<T>* left, State<T>* right) {
@@ -16,11 +22,17 @@ private:
         }
     };
     priority_queue<State<T>*,vector<State<T>*>,Cmp> open;
-    unordered_set<State<T>*> closed;
+    unordered_set<State<T>*> finished;
     int evaluate = 0;
     double cost = 0;
 
 public:
+    /**
+     * this func returns the path organize according to priority.
+     * @param queueOpen a type of container designed such that the first element of the queue is the
+     * greatest of all elements in the queue and elements are in non increasing order.
+     * @return priority queue.
+     */
     priority_queue<State<T>*,vector<State<T>*>,Cmp> updateQueue(priority_queue<State<T>*, vector<State<T>*>, Cmp> &queueOpen) {
         priority_queue<State<T>*,vector<State<T>*>,Cmp> temp;
         while (!queueOpen.empty()) {
@@ -31,6 +43,11 @@ public:
         return temp;
     }
 
+    /**
+     * This func finds the cheapest path from the initial state to the goal state.
+     * @param s a searchable to run over him the algorithm.
+     * @return the cheapest path.
+     */
     vector<State<T>*> search(Searchable<T> *s) {
         open.push(s->getInitialState());
         vector<State<T>*> path;
@@ -39,9 +56,9 @@ public:
             // Remove this vertex from the open list
             open.pop();
             evaluate++;
-            // Add this vertex to the closed list
+            // Add this vertex to the finished list
             n->setVisit();
-            closed.insert(n);
+            finished.insert(n);
             if (n->equals(s->getGoalState())) {
                 path.push_back(n);
                 while (!n->equals(s->getInitialState())) {
@@ -59,15 +76,13 @@ public:
             vector<State<T> *> adjacent = s->getAllPossibleStates(n);
             for (State<T> *adj : adjacent) {
                 bool exist = isExist(open, adj);
-                if (!exist && closed.count(adj) != 1) {
+                if (!exist && finished.count(adj) != 1) {
                     adj->setVisit();
-                    //adj->setFather(n);
                     adj->setH(s->calcHValue(adj));
                     open.push(adj);
                     adj->setDistance(n->getDistance() + adj->getCost());
                 } else if (adj->getDistance() > n->getDistance() + adj->getCost()) {
                     adj->setDistance(n->getDistance() + adj->getCost());
-                    //adj->setFather(n);
                     adj->setH(s->calcHValue(adj));
                     open = updateQueue(open);
                 }
@@ -75,6 +90,12 @@ public:
         }
     }
 
+    /**
+     * this func checks if a given state is in the priority queue.
+     * @param o priority queue.
+     * @param state the given state we want to check if he is in the queue.
+     * @return true/ false.
+     */
     bool isExist( priority_queue<State<T> *, vector<State<T> *>, Cmp> o, State<T> *state) {
         while (!o.empty()) {
             if (state->equals(o.top())) {
@@ -84,13 +105,24 @@ public:
         }
         return false;
     }
+
+    /**
+     * @return the number of vertices.
+     */
     int getNumberOfNodesEvaluated(){
         return evaluate;
     }
 
+    /**
+     * @return the name of the class.
+     */
     string getClassName(){
         return "AStar";
     }
+
+    /**
+     * @return a clone of Astar.
+     */
     Searcher<T, vector<State<T>*>>* clone() {
         return new AStar<T>();
     }

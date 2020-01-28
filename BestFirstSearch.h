@@ -8,8 +8,15 @@
 #include "Searcher.h"
 
 template <class T>
+
+/**
+ * this class is an algorithm to solve the problem of finding the cheapest path. This algorithm uses
+ * the searcher interface
+ * @tparam T a generic parameter.
+ */
 class BestFirstSearch: public Searcher<T,vector<State<T>*>>{
 private:
+    //comparator
     class Cmp {
     public:
         bool operator()(State<T>* left, State<T>* right) {
@@ -17,13 +24,17 @@ private:
         }
     };
     priority_queue<State<T>*, vector<State<T>*>, Cmp> open;
-    unordered_set<State<T>*> closed;
+    unordered_set<State<T>*> finished;
     int evaluate = 0;
     double cost = 0;
 
-
-
 public:
+    /**
+     * this func checks if a given state is in the priority queue.
+     * @param o priority queue.
+     * @param state the given state we want to check if he is in the queue.
+     * @return true/ false.
+     */
     bool isExist( priority_queue<State<T> *, vector<State<T> *>, Cmp> open, State<T> *state) {
         while (!open.empty()) {
             if (state->equals(open.top())) {
@@ -33,6 +44,13 @@ public:
         }
         return false;
     }
+
+    /**
+     * this func returns the path organize according to priority.
+     * @param queueOpen a type of container designed such that the first element of the queue is the
+     * greatest of all elements in the queue and elements are in non increasing order.
+     * @return priority queue.
+     */
     priority_queue<State<T>*,vector<State<T>*>,Cmp> updateQueue(priority_queue<State<T>*, vector<State<T>*>, Cmp> &queueOpen) {
         priority_queue<State<T>*,vector<State<T>*>,Cmp> temp;
         while (!queueOpen.empty()) {
@@ -43,6 +61,11 @@ public:
         return temp;
     }
 
+    /**
+     * This func finds the cheapest path from the initial state to the goal state.
+     * @param s a searchable to run over him the algorithm.
+     * @return the cheapest path.
+     */
     vector<State<T>*> search(Searchable<T>* searchable) override {
         open.push(searchable->getInitialState());
         vector<State<T>*> path;
@@ -50,7 +73,7 @@ public:
             evaluate++;
             State<T>* n = open.top();
             open.pop();
-            closed.insert(n);
+            finished.insert(n);
             if (n->equals(searchable->getGoalState())) {
                 path.push_back(n);
                 while (!n->equals(searchable->getInitialState())) {
@@ -70,7 +93,7 @@ public:
 
             for (State<T>* adj : adjacent) { ;
                 bool exist = isExist(open, adj);
-                if (!exist && closed.count(adj) != 1) {
+                if (!exist && finished.count(adj) != 1) {
                     adj->setFather(n);
                     adj->setDistance(n->getDistance() +adj->getCost()) ;
                     open.push(adj);
@@ -84,12 +107,24 @@ public:
         }
         return path;
     }
+
+    /**
+     * @return the number of vertices.
+     */
     int getNumberOfNodesEvaluated(){
         return evaluate;
     }
+
+    /**
+    * @return the name of the class.
+    */
     string getClassName(){
         return "BestFirstSearch";
     }
+
+    /**
+     * @return a clone of Best first Search.
+     */
     Searcher<T, vector<State<T>*>>* clone() {
         return new BestFirstSearch<T>();
     }
