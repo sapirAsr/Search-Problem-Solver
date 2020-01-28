@@ -7,6 +7,9 @@
 
 #include "Server.h"
 
+/**
+ * this func implement the server interface. this func will connect a few client to server.
+ */
 class MyParallelServer : public server_side::Server{
 private:
     bool stopLoop = false;

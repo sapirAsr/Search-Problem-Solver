@@ -8,7 +8,9 @@
 #include "Searchable.h"
 #include "Position.h"
 
-
+/**
+ * this class implement the interface searchable
+ */
 class Mat : public Searchable<Position> {
 private:
     vector<vector<double>> matrix;

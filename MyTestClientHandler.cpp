@@ -5,6 +5,10 @@
 #include "MyTestClientHandler.h"
 #include "AStar.h"
 
+/**
+ * this func handles with the input we got from the client.
+ * @param input an int we pass to the read method.
+ */
 void MyTestClientHandler::handleClient(int input) {
     char buffer[1024] = {0};
     read(input, buffer, 1024);
@@ -27,21 +31,19 @@ void MyTestClientHandler::handleClient(int input) {
     close(input);
 }
 
+/**
+ * constructor
+ * @param cache that we will save the solutions inside.
+ * @param solver a solver that will solve the matrix problem.
+ */
 MyTestClientHandler::MyTestClientHandler(CacheManager *cache, Solver<string, string>* solver) {
     this->cacheManager = cache;
     this->solver = solver;
 }
 
-bool MyTestClientHandler::Find(string str) {
-    int len = str.length();
-    for (int i = 0; i < len - 2; ++i) {
-        if (str[i] == 'e' && str[i + 1] == 'n' && str[i + 2] == 'd') {
-            return true;
-        }
-    }
-    return false;
-}
-
+/**
+ * @return a clone of my test client handler.
+ */
 ClientHandler* MyTestClientHandler::clone() {
     return new MyTestClientHandler(this->cacheManager, solver->clone());
 }

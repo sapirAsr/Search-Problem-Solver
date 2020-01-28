@@ -4,6 +4,10 @@
 
 #include "MyParallelServer.h"
 
+/**
+ * @param port the port we want to connect.
+ * @param c client handler.
+ */
 void MyParallelServer::open(int port, ClientHandler *c) {
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -38,10 +42,20 @@ void MyParallelServer::open(int port, ClientHandler *c) {
     serverThread.join();
 }
 
+/**
+ * this func stops the running.
+ * @param socketfd the number of the socket we want to connect
+ */
 void MyParallelServer::stop(int socketfd) {
     this->stopLoop = true;
 }
 
+/**
+ * this func will connect a few clients that will run parallel.
+ * @param socketfd the socket we want all our clients to connect.
+ * @param address the addres we want to connect.
+ * @param c the client handler that we will use.
+ */
 void MyParallelServer::loop(int socketfd, sockaddr_in address, ClientHandler *c) {
     struct timeval tv{};
     tv.tv_sec = 120;
@@ -64,6 +78,10 @@ void MyParallelServer::loop(int socketfd, sockaddr_in address, ClientHandler *c)
     }
 }
 
+/**
+ * @param client_socket the socket we want to connect.
+ * @param c the client handler we will use to connect to the socket.
+ */
 void MyParallelServer::clientTheard(int client_socket, ClientHandler *c) {
     c->handleClient(client_socket);
 }

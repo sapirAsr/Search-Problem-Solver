@@ -7,6 +7,9 @@
 
 #include "Server.h"
 
+/**
+ * this class implement the server interface and connect a client to server.
+ */
 class MySerialServer : public server_side::Server {
 public:
     void open(int port, ClientHandler *c);

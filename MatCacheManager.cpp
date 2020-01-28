@@ -4,6 +4,12 @@
 
 #include "MatCacheManager.h"
 
+/**
+ * This func check if we already have a solution to a prblem we solved before.
+ * @param problem
+ * @param name the name of the class.
+ * @return true/ false.
+ */
 bool MatCacheManager::isResolved(string problem, string name) {
     int val = hasher(problem);
     string fileName = name + to_string(val) + ".txt";
@@ -16,6 +22,12 @@ bool MatCacheManager::isResolved(string problem, string name) {
     }
 }
 
+/**
+ * this func returns the solution of the problem we already solved.
+ * @param problem
+ * @param name the name of the class.
+ * @return string of the solution.
+ */
 string MatCacheManager::popSolution(string problem, string name) {
     string solution;
     string temp;
@@ -36,6 +48,12 @@ string MatCacheManager::popSolution(string problem, string name) {
     return solution;
 }
 
+/**
+ * this func writes to files the solution to the problems we solved.
+ * @param problem
+ * @param solution
+ * @param name of class.
+ */
 void MatCacheManager::saveSolution(string problem, string solution, string name) {
     int val = hasher(problem);
     // writing to file
@@ -50,6 +68,11 @@ void MatCacheManager::saveSolution(string problem, string solution, string name)
     toFile.close();
 }
 
+/**
+ * this func checks if we already solved a given matrix problem.
+ * @param mat a given matrix we want to check if we solved.
+ * @return
+ */
 int MatCacheManager::problemKeyString(string mat) {
     int val;
     if (this->matrices.find(mat) != this->matrices.end()) {

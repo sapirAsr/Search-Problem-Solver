@@ -36,15 +36,13 @@ namespace boot {
             server_side::Server *s = new MyParallelServer;
             CacheManager *cacheManager = new MatCacheManager;
             Searcher<Position, vector<State<Position> *>> *n = new AStar<Position>;
-            Solver<Searchable<Position> *, vector<State<Position> *>> *solver = new OA<Position, vector<State<Position> *>>(
-                    n);
+            Solver<Searchable<Position> *, vector<State<Position> *>> *solver = new OA<Position,
+            vector<State<Position> *>>(n);
             ClientHandler *c = new MyClientHandler(cacheManager, solver);
             s->open(port, c);
-
             return 0;
         }
     };
-
 }
 
 

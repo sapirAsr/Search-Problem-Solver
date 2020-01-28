@@ -8,6 +8,9 @@
 
 #include "ClientHandler.h"
 
+/**
+ * this class implements the client handler intrface.
+ */
 class MyClientHandler : public ClientHandler {
 private:
     CacheManager* cacheManager;

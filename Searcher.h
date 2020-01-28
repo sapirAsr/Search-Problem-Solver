@@ -13,6 +13,11 @@
 #include "State.h"
 #include "Searchable.h"
 
+/**
+ * this is the searcher interface.
+ * @tparam T a generic type.
+ * @tparam S a generic type.
+ */
 template <class T, class S> class Searcher {
 private:
     int evaluatedNodes = 0;

@@ -10,13 +10,17 @@
 
 using namespace std;
 
+/**
+ * this is the solver interface.
+ * @tparam T a generic type.
+ * @tparam S a generic type.
+ */
 template <class T, class S>class Solver {
 public:
     S virtual solve(T problem) = 0;
     virtual string getClassName() = 0;
     virtual Solver* clone() = 0;
     virtual int getSearcherNodes() = 0;
-
     };
 
 

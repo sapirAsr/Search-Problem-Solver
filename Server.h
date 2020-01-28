@@ -12,6 +12,9 @@
 #include <thread>
 #include "ClientHandler.h"
 
+/**
+ * this is the server interface.
+ */
 namespace server_side {
     class Server {
     public:
