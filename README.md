@@ -3,12 +3,12 @@ Milestone 2 - Advanced Programming 1
 This project implements several search algorithms and compare which one is the best in solving a problem on server side.
 
 We used the following interfaces in order to keep our program generic and able to handle different problems easily:
-Server
-Client Handler
-Solver
-CacheManager
-Searcher
-Searchable
+- Server
+- Client Handler
+- Solver
+- CacheManager
+- Searcher
+- Searchable
 
 Server:
 We have a server interface with 2 implementations
