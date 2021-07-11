@@ -1,4 +1,4 @@
-# milestone2
+# Milestone2 - General Server
 Made by: Michal Rahimi and Sapir Asras.
 
 ### Milestone 2 - Advanced Programming 1
